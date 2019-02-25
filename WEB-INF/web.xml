@@ -1,0 +1,24 @@
+<web-app>
+
+<servlet>
+<servlet-name> log </servlet-name>
+<servlet-class> login.Login </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> log </servlet-name>
+<url-pattern>/log </url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+<servlet-name> connexion </servlet-name>
+<servlet-class> login.Connexion </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> connexion </servlet-name>
+<url-pattern>/connexion </url-pattern>
+</servlet-mapping>
+
+</web-app>
