@@ -16,5 +16,4 @@ public class Loader extends HttpServlet {
 		super.init(arg0);
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
-
 }
