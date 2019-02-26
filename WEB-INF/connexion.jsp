@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import ="java.util.*" %>
 <!DOCTYPE html>
 
@@ -27,7 +27,7 @@
 
 	<%
 		if (logIn)
-			response.sendRedirect("/");
+			response.sendRedirect("/projet/menu");
 		else
 			response.sendRedirect("/projet/log?error=1");
 	%>

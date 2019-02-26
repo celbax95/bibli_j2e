@@ -4,8 +4,9 @@ public class User {
 
 	private String login;
 	private String pass;
+	private boolean bibli;
 
-	public User(String login, String pass) {
+	public User(String login, String pass, boolean bibli) {
 		this.login = login;
 		this.pass = pass;
 	}
@@ -16,5 +17,9 @@ public class User {
 
 	public String getPass() {
 		return pass;
+	}
+
+	public boolean isBibli() {
+		return bibli;
 	}
 }

@@ -1,7 +1,16 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import ="java.util.*" %>
+<%@ page import ="user.User" %>
+
+<%
+	String[][] b = (String[][]) request.getAttribute("b");
+	String nomUser = ((User)request.getSession().getAttribute("user")).getLogin();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Menu</title>
 </head>
 
 <style type="text/css">
@@ -104,7 +113,7 @@
 		margin: auto;
 	}
 
-	#content #mab {
+	#content .mab {
 		background-color: white;
 		width: 400px;
 		height: 70px;
@@ -120,13 +129,13 @@
 		transition: 0.8s;
 	}
 
-	#content #mab:hover {
+	#content .mab:hover {
 		background-color: rgb(240,240,240);
 		box-shadow: 0 8px rgb(180,180,180);
 
 	}
 
-	#content #mab:active {
+	#content .mab:active {
 		transform: translateY(5px);
 		box-shadow: 0 5px rgb(150,150,150);
 		transition: 0.08s;
@@ -135,7 +144,7 @@
 	#content a {
 		text-decoration: none
 	}
-	#content #mab p {
+	#content .mab p {
 		font-size: 22px;
 		font-weight: bold;
 		text-decoration: none;
@@ -149,7 +158,7 @@
 <body>
 	<div id="user">
 		<div></div>
-		<div><p>Utilisateur</p></div>
+		<div><p><%=nomUser%></p></div>
 
 
 	</div>
@@ -157,9 +166,15 @@
 		<h1>Bibli2e</h1>
 	</div></div>
 	<div id="content">
-		<a href=""><div id="mab"><p>Ma bibliothèque</p></div></a>
+
+		<% for (int i = 0, nB = b.length; i < nB; i++) { %>
+
+		<a href=<%=b[i][1]%>><div class="mab"><p><%=b[i][0]%></p></div></a>
+
+		<% if (i+1 < nB) %>
 		<div class="space"></div>
-		<a href=""><div id="mab"><p>Mes emprunts</p></div></a>
+
+		<%}%>
 	</div>
 </body>
 </html>

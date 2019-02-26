@@ -21,4 +21,15 @@
 <url-pattern>/connexion </url-pattern>
 </servlet-mapping>
 
+
+<servlet>
+<servlet-name> menu </servlet-name>
+<servlet-class> menu.Menu </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> menu </servlet-name>
+<url-pattern>/menu </url-pattern>
+</servlet-mapping>
+
 </web-app>

@@ -36,25 +36,31 @@ public class Connexion extends HttpServlet {
 		String mdp = req.getParameter("pwd");
 
 		boolean logIn = log(c, nom, mdp);
-		User user = new User(nom,mdp);
+		User user = new User(nom, mdp, isBibli(c, nom, mdp));
 
 		if (logIn) {
 			ses.setAttribute("user", user);
 		}
-		/*
-		 * resp.setContentType("text/html"); PrintWriter out = resp.getWriter();
-		 * 
-		 * out.println("<html>"); out.println("<head>");
-		 * 
-		 * out.println("<title> " + getClass().getSimpleName() + " </title>");
-		 * out.println("</head>"); out.println("<body bgcolor=\"white\">"); if (logIn) {
-		 * out.println("<p>" + nom + "</p>"); out.println("<p>" + mdp + "</p>"); } else
-		 * { out.println("<p>Vous n'etes pas connecté</p>"); } out.println("");
-		 * 
-		 * out.println("</body>"); out.println("</html>");
-		 */
+
 		req.setAttribute("logIn", logIn);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(req, resp);
+	}
+
+	private boolean isBibli(Connection c, String nom, String mdp) {
+		String req = "SELECT COUNT(*) FROM Utilisateur WHERE login = ? AND pass = ? AND bibli = 1";
+		ResultSet res = null;
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			s.setString(1, nom);
+			s.setString(2, mdp);
+			res = s.executeQuery();
+
+			return (res != null && res.next() && res.getInt(1) > 0);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	private boolean log(Connection c, String nom, String mdp) {
