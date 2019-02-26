@@ -48,12 +48,13 @@
 		box-shadow: 0 0 10px gray;
 	}
 
-	#titre div {
+	#titre a {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		text-decoration: none;
 	}
 
 	#titre h1 {
@@ -167,16 +168,16 @@
 	}
 </style>
 <body>
-		<div id="user">
-	<a href="/projet/log">
+	<div id="user">
+		<a href="/projet/log">
 			<div></div>
 			<div><p><%=nomUser%></p></div>
-	</a>
-		</div>
+		</a>
+	</div>
 
-	<div id="titre"><div>
+	<div id="titre"><a href="/projet/menu">
 	<h1>Média2e</h1>
-	</div></div>
+	</a></div>
 	<div id="content">
 
 		<% for (int i = 0, nB = b.length; i < nB; i++) { %>
