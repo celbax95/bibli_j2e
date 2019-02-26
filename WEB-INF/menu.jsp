@@ -143,7 +143,11 @@
 	}
 
 	#content a {
-		text-decoration: none
+		display: block;
+		width: 400px;
+		height: 70px;
+		margin: auto;
+		text-decoration: none;
 	}
 	#content .mab p {
 		font-size: 22px;
