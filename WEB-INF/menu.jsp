@@ -66,11 +66,17 @@
 	#user {
 		width: 220px;
 		height: 80px;
-		display: flex;
 		float: left;
 		margin-top: 10px; 
 		margin-left: 20px;
 		overflow: hidden;
+	}
+
+	#user a {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		text-decoration: none;
 	}
 
 	#user div:first-child {
@@ -161,14 +167,15 @@
 	}
 </style>
 <body>
-	<div id="user">
-		<div></div>
-		<div><p><%=nomUser%></p></div>
+		<div id="user">
+	<a href="/projet/log">
+			<div></div>
+			<div><p><%=nomUser%></p></div>
+	</a>
+		</div>
 
-
-	</div>
 	<div id="titre"><div>
-		<h1>Média2e</h1>
+	<h1>Média2e</h1>
 	</div></div>
 	<div id="content">
 
