@@ -168,7 +168,7 @@
 
 	</div>
 	<div id="titre"><div>
-		<h1>Bibli2e</h1>
+		<h1>Média2e</h1>
 	</div></div>
 	<div id="content">
 

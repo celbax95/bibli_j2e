@@ -20,9 +20,13 @@ public class Menu extends HttpServlet {
 		User u = (User) ses.getAttribute("user");
 
 		if (!u.isBibli()) {
-			req.setAttribute("b", new String[][] { { "Ma bibliothèque", "./projet/vueBiliotheque" },
-					{ "Mes emprunts", "./projet/emprunts" }
+			req.setAttribute("b", new String[][] { { "Ma médiathèque", "./projet/vueMediatheque" },
+				{ "Mes emprunts", "./projet/emprunts" }
 			});
+
+		} else {
+			req.setAttribute("b", new String[][] { { "Médiathèque", "./projet/vueMediatheque" },
+				{ "Ajouter des documents", "./projet/emprunts" } });
 		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);

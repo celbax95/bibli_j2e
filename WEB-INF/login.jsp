@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Login Média2e</title>
 </head>
 
 <style type="text/css">
