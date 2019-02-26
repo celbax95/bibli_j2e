@@ -5,6 +5,7 @@
 <%
 	String[][] b = (String[][]) request.getAttribute("b");
 	String nomUser = ((User)request.getSession().getAttribute("user")).getLogin();
+	nomUser = Character.toUpperCase(nomUser.charAt(0)) + nomUser.substring(1, nomUser.length());
 %>
 
 <!DOCTYPE html>
