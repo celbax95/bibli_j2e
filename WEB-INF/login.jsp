@@ -11,18 +11,67 @@
 </head>
 
 <style type="text/css">
-	div {
+
+	* {
+		outline:0;
+		margin : 0;
+		padding:0;
+		box-sizing : border-box;
+	}
+
+	html {
+		height: 100%;
+	}
+
+	body {
+		width: 100%;
+		height: 100%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: right top;
+		background-attachment: fixed;
+		background-color: #383838;
+	}
+
+	#titre {
+		width: 240px;
+		border-bottom: 2px solid white;
+		margin: auto;
+		margin-bottom: 25px;
+		padding-bottom: 8px; 
+	}
+
+	#titre h2 {
+		display: block;
+		color: white;
+		font-size: 35px;
+	}
+
+	div.input {
 		text-align: center;
-		margin-bottom: 20px;
+		margin-bottom: 30px;
 		font-size: 17px;
 	}
 
 	input {
+		width: 200px;
 		font-size: 18px;
+		background-color: transparent;
+		border: 0;
+		border-bottom: 2px solid white;
+		color: white;
+		margin-left: 10px;
+		padding: 3px;
+		padding-left: 10px;
 	}
 
 	.input {
 		display: block;
+	}
+
+	label {
+		color: white;
+		font-size: 18px;
 	}
 
 	body {
@@ -34,21 +83,38 @@
 		display: inline-block;
 		overflow: hidden;
 		padding: 30px;
-		border: 2px solid black;
+		border: 2px solid white;
 		border-radius: 10%;
 	}
 
 	button {
+		background-color: white;
+		border: none;
+		width: 120px;
+		height: 40px;
+		margin: auto;
+		margin-top: 10px;
+		text-align: center;
+		box-shadow: 0 5px rgb(200,200,200);
+		border-radius: 20px;
+		transition: 0.8s;
+	}
+
+	button:hover {
+		background-color: rgb(240,240,240);
+		box-shadow: 0 5px rgb(180,180,180);
+	}
+
+	button:active {
+		transform: translateY(2px);
+		box-shadow: 0 3px rgb(150,150,150);
+		transition: 0.08s;
+	}
+
+	button p {
+		display: block;
+		text-align: center;
 		font-size: 17px;
-	}
-
-	h2 {
-		text-decoration: underline;
-		margin-bottom: 20px;
-	}
-
-	.button {
-		margin-top: 30px;
 	}
 
 	.space {
@@ -56,14 +122,14 @@
 		padding: 1px;
 	}
 
-	p {
+	p.error {
 		color: red;
 	}
 </style>
 
 <body>
 	<form action="/projet/connexion" method="get">
-		<h2>Connexion</h2>
+		<div id="titre"><h2>Connexion</h2></div>
 
 		<% if (err != null && err.equals("1")) { %>
 			<p class="error">Pseudo ou mot de passe incorrect.</p>
@@ -82,7 +148,7 @@
 		</div>
 
 		<div class="button">
-			<button type="submit">Valider</button>
+			<button type="submit"><p>Valider</p></button>
 		</div>
 
 	</form>
