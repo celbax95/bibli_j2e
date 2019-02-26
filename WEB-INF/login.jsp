@@ -63,6 +63,7 @@
 		margin-left: 10px;
 		padding: 3px;
 		padding-left: 10px;
+		text-shadow: 0 0 0.2px white;
 	}
 
 	.input {
@@ -71,6 +72,7 @@
 
 	label {
 		color: white;
+		text-shadow: 0 0 0.1px white;
 		font-size: 18px;
 	}
 
@@ -85,6 +87,7 @@
 		padding: 30px;
 		border: 2px solid white;
 		border-radius: 10%;
+		box-shadow: 0 0 5px white;
 	}
 
 	button {
