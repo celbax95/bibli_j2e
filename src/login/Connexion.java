@@ -1,7 +1,6 @@
 package login;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import user.User;
 
 public class Connexion extends HttpServlet {
 
@@ -26,32 +28,33 @@ public class Connexion extends HttpServlet {
 
 		Connection c = connectMySQL(URL, LOG, MDP);
 
+		HttpSession ses = req.getSession();
+
 		System.out.println("Connecte a la base de donnees");
 
 		String nom = req.getParameter("log");
 		String mdp = req.getParameter("pwd");
 
 		boolean logIn = log(c, nom, mdp);
+		User user = new User(nom,mdp);
 
-		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
-
-		out.println("<html>");
-		out.println("<head>");
-
-		out.println("<title> " + getClass().getSimpleName() + " </title>");
-		out.println("</head>");
-		out.println("<body bgcolor=\"white\">");
 		if (logIn) {
-			out.println("<p>" + nom + "</p>");
-			out.println("<p>" + mdp + "</p>");
-		} else {
-			out.println("<p>Vous n'etes pas connecté</p>");
+			ses.setAttribute("user", user);
 		}
-		out.println("");
-
-		out.println("</body>");
-		out.println("</html>");
+		/*
+		 * resp.setContentType("text/html"); PrintWriter out = resp.getWriter();
+		 * 
+		 * out.println("<html>"); out.println("<head>");
+		 * 
+		 * out.println("<title> " + getClass().getSimpleName() + " </title>");
+		 * out.println("</head>"); out.println("<body bgcolor=\"white\">"); if (logIn) {
+		 * out.println("<p>" + nom + "</p>"); out.println("<p>" + mdp + "</p>"); } else
+		 * { out.println("<p>Vous n'etes pas connecté</p>"); } out.println("");
+		 * 
+		 * out.println("</body>"); out.println("</html>");
+		 */
+		req.setAttribute("logIn", logIn);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(req, resp);
 	}
 
 	private boolean log(Connection c, String nom, String mdp) {
@@ -60,7 +63,6 @@ public class Connexion extends HttpServlet {
 
 		try {
 			PreparedStatement s = c.prepareStatement(req);
-			System.out.println(s);
 			s.setString(1, nom);
 			s.setString(2, mdp);
 			res = s.executeQuery();
