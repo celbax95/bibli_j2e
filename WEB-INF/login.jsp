@@ -1,4 +1,9 @@
 <%@ page pageEncoding="UTF-8" %>
+
+<%
+	String err = request.getParameter("error");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,31 +44,47 @@
 
 	h2 {
 		text-decoration: underline;
-		margin-bottom: 35px;
+		margin-bottom: 20px;
 	}
 
 	.button {
-		margin-top: 40px;
+		margin-top: 30px;
+	}
+
+	.space {
+		margin-bottom: 15px;
+		padding: 1px;
+	}
+
+	p {
+		color: red;
 	}
 </style>
 
 <body>
-		<form action="/projet/connexion" method="get">
-			<h2>Connexion</h2>
-			<div class="input">
-				<label for="log">Pseudo :</label>
-				<input type="text" placeholder="Pseudo" id="pwd" value="test" name="log">
-			</div>
+	<form action="/projet/connexion" method="get">
+		<h2>Connexion</h2>
 
-			<div class="input">
-				<label for="pwd">Mot de passe :</label>
-				<input type="password" placeholder="Mot de passe" id="pwd" value="test" name="pwd">
-			</div>
+		<% if (err != null && err.equals("1")) { %>
+			<p class="error">Pseudo ou mot de passe incorrect.</p>
+		<% } else {%>
+			<div class="space"></div>
+		<% } %>
 
-			<div class="button">
-				<button type="submit">Valider</button>
-			</div>
+		<div class="input">
+			<label for="log">Pseudo :</label>
+			<input type="text" placeholder="Pseudo" id="log" value="test" name="log">
+		</div>
 
-		</form>
+		<div class="input">
+			<label for="pwd">Mot de passe :</label>
+			<input type="password" placeholder="Mot de passe" id="pwd" value="test" name="pwd">
+		</div>
+
+		<div class="button">
+			<button type="submit">Valider</button>
+		</div>
+
+	</form>
 </body>
 </html>
