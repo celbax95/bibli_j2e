@@ -13,20 +13,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import loader.Loader;
 import user.User;
 
 public class Connexion extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String URL = "jdbc:mysql://localhost:3306/j2e?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
-	private static final String LOG = "jdbc";
-	private static final String MDP = "";
+	private static Connection connectMySQL(String url, String log, String mdp) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			return DriverManager.getConnection(url, log, mdp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		Connection c = connectMySQL(URL, LOG, MDP);
+		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
 		HttpSession ses = req.getSession();
 
@@ -79,20 +91,5 @@ public class Connexion extends HttpServlet {
 			e.printStackTrace();
 		}
 		return false;
-	}
-
-	private static Connection connectMySQL(String url, String log, String mdp) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			return DriverManager.getConnection(url, log, mdp);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 }
