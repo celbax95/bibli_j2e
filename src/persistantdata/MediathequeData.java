@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +146,25 @@ public class MediathequeData implements PersistentMediatheque {
 	// renvoie la liste de tous les documents de la bibliothèque
 	@Override
 	public List<Document> tousLesDocuments() {
-		return null;
-	}
 
+		List<Document> docs = new ArrayList<>();
+
+		String req = "SELECT id FROM Document";
+		ResultSet res = null;
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			res = s.executeQuery();
+
+			List<Integer> ids = new ArrayList<>();
+			while (res.next())
+				ids.add(res.getInt(0));
+
+			for (Integer idDoc : ids)
+				docs.add(getDocument(idDoc));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return docs;
+	}
 }
