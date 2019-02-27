@@ -3,8 +3,6 @@ package login;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import loader.Loader;
+import mediatheque.Mediatheque;
 import user.User;
 
 public class Connexion extends HttpServlet {
@@ -40,6 +39,8 @@ public class Connexion extends HttpServlet {
 
 		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
+		Mediatheque m = Mediatheque.getInstance();
+
 		HttpSession ses = req.getSession();
 
 		System.out.println("Connecte a la base de donnees");
@@ -47,49 +48,13 @@ public class Connexion extends HttpServlet {
 		String nom = req.getParameter("log");
 		String mdp = req.getParameter("pwd");
 
-		boolean logIn = log(c, nom, mdp);
-		User user = new User(nom, mdp, isBibli(c, nom, mdp));
+		User user = null;
+		user = (User) m.getUser(nom, mdp);
 
-		if (logIn) {
+		if (user != null) {
 			ses.setAttribute("user", user);
 		}
 
-		req.setAttribute("logIn", logIn);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(req, resp);
-	}
-
-	private boolean isBibli(Connection c, String nom, String mdp) {
-		String req = "SELECT COUNT(*) FROM Utilisateur WHERE login = ? AND pass = ? AND bibli = 1";
-		ResultSet res = null;
-		try {
-			PreparedStatement s = c.prepareStatement(req);
-			s.setString(1, nom);
-			s.setString(2, mdp);
-			res = s.executeQuery();
-
-			return (res != null && res.next() && res.getInt(1) > 0);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	private boolean log(Connection c, String nom, String mdp) {
-		String req = "SELECT COUNT(*) FROM Utilisateur WHERE login = ? AND pass = ?";
-		ResultSet res = null;
-
-		try {
-			PreparedStatement s = c.prepareStatement(req);
-			s.setString(1, nom);
-			s.setString(2, mdp);
-			res = s.executeQuery();
-
-			return (res != null && res.next() && res.getInt(1) > 0);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 }

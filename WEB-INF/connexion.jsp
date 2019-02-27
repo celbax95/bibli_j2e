@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <%
-	Boolean logIn = (Boolean) request.getAttribute("logIn");
+	Boolean logIn = ((Boolean) (request.getAttribute("user") != null)) ;
 %>
 
 <html>

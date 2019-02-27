@@ -18,6 +18,11 @@ public class Loader extends HttpServlet {
 	@Override
 	public void init(ServletConfig arg0) throws ServletException {
 		super.init(arg0);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		try {
+			Class.forName("persistantdata.MediathequeData");
+			System.out.println("Mediatheque chargee !");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

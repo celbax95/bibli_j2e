@@ -24,6 +24,11 @@ public class MediathequeData implements PersistentMediatheque {
 
 	static {
 		c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
+		if (c != null) {
+			System.out.println("Connecte a la BDD");
+		} else {
+			System.out.println("Pas connecte a la BDD");
+		}
 		Mediatheque.getInstance().setData(new MediathequeData());
 	}
 
