@@ -7,4 +7,9 @@ public class CD extends Doc {
 		super(id, nom, auteur, prix, emprunte);
 		this.album = album;
 	}
+
+	@Override
+	public Object[] affiche() {
+		return super.affiche(new Object[] { album });
+	}
 }

@@ -26,10 +26,17 @@ public abstract class Doc implements Document {
 		this.emprunte = emprunte;
 	}
 
-	@Override
-	public Object[] affiche() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Object[] affiche(Object[] oChild) {
+
+		Object[] oThis = new Object[] { id, nom, auteur, prix, emprunte };
+
+		int length = oThis.length + oChild.length;
+		Object[] o = new Object[length];
+
+		System.arraycopy(oThis, 0, o, 0, oThis.length);
+		System.arraycopy(oChild, 0, o, oThis.length, oChild.length);
+
+		return o;
 	}
 
 	@Override
@@ -59,5 +66,4 @@ public abstract class Doc implements Document {
 			e.printStackTrace();
 		}
 	}
-
 }

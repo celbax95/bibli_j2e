@@ -7,4 +7,9 @@ public class Livre extends Doc {
 		super(id, nom, auteur, prix, emprunte);
 		this.editeur = editeur;
 	}
+
+	@Override
+	public Object[] affiche() {
+		return super.affiche(new Object[] { editeur });
+	}
 }
