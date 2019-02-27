@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,8 @@ public class MediathequeData implements PersistentMediatheque {
 	// Jean-François Brette 01/01/2018
 
 	private static Connection c;
+
+	private static String[] tName = new String[] { "CD", "DVD", "Livre" };
 
 	static {
 		c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
@@ -137,10 +140,40 @@ public class MediathequeData implements PersistentMediatheque {
 	}
 
 	@Override
-	public void nouveauDocument(int type, Object... args) {
-		// args[0] -> le titre
-		// args [1] --> l'auteur
-		// etc...
+	public void nouveauDocument(int type, Object... o) {
+		String reqDoc = "INSERT INTO Document VALUES (?, ?, ?, ?, ?)";
+		String reqSpe = "INSERT INTO ? VALUES (?, ?)";
+
+		ResultSet res = null;
+
+		int idDoc = 0;
+
+		try {
+			int i = 0;
+			PreparedStatement s = c.prepareStatement(reqDoc, Statement.RETURN_GENERATED_KEYS);
+			s.setInt(i + 1, (int) o[i++]);
+			s.setString(i + 1, (String) o[i++]);
+			s.setString(i + 1, (String) o[i++]);
+			s.setInt(i + 1, (int) o[i++]);
+			s.setInt(i + 1, (int) o[i++]);
+			s.executeUpdate();
+
+			res = s.getGeneratedKeys();
+
+			if (!res.next())
+				return;
+
+			idDoc = res.getInt(0);
+
+			s = c.prepareStatement(reqSpe, Statement.RETURN_GENERATED_KEYS);
+			s.setString(0, tName[type]);
+			s.setInt(1, idDoc);
+			s.setString(2, (String) o[i++]);
+			s.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// renvoie la liste de tous les documents de la bibliothèque
