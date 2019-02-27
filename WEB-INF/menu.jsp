@@ -169,13 +169,13 @@
 </style>
 <body>
 	<div id="user">
-		<a href="/projet/log">
+		<a href="/bibli_j2e/log">
 			<div></div>
 			<div><p><%=nomUser%></p></div>
 		</a>
 	</div>
 
-	<div id="titre"><a href="/projet/menu">
+	<div id="titre"><a href="/bibli_j2e/menu">
 	<h1>Média2e</h1>
 	</a></div>
 	<div id="content">

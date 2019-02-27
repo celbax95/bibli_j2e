@@ -27,9 +27,9 @@
 
 	<%
 		if (logIn)
-			response.sendRedirect("/projet/menu");
+			response.sendRedirect("/bibli_j2e/menu");
 		else
-			response.sendRedirect("/projet/log?error=1");
+			response.sendRedirect("/bibli_j2e/log?error=1");
 	%>
 
 </body>

@@ -131,7 +131,7 @@
 </style>
 
 <body>
-	<form action="/projet/connexion" method="get">
+	<form action="/bibli_j2e/connexion" method="get">
 		<div id="titre"><h2>Connexion</h2></div>
 
 		<% if (err != null && err.equals("1")) { %>
