@@ -48,7 +48,16 @@ public abstract class Doc implements Document {
 
 	@Override
 	public void retour() {
-		// TODO Auto-generated method stub
+		Connection c = MediathequeData.connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
+
+		String req = "UPDATE Document SET emprunte = 0 WHERE id = ?";
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			s.setInt(1, id);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
