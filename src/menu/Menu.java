@@ -19,14 +19,13 @@ public class Menu extends HttpServlet {
 		HttpSession ses = req.getSession();
 		User u = (User) ses.getAttribute("user");
 
-		if (!u.isBibli()) {
+		if (!u.isBibliothecaire()) {
 			req.setAttribute("b", new String[][] { { "Ma médiathèque", "./projet/vueMediatheque" },
-				{ "Mes emprunts", "./projet/emprunts" }
-			});
+					{ "Mes emprunts", "./projet/emprunts" } });
 
 		} else {
 			req.setAttribute("b", new String[][] { { "Médiathèque", "./projet/vueMediatheque" },
-				{ "Ajouter des documents", "./projet/emprunts" } });
+					{ "Ajouter des documents", "./projet/emprunts" } });
 		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);

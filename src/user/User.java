@@ -1,6 +1,8 @@
 package user;
 
-public class User {
+import mediatheque.Utilisateur;
+
+public class User implements Utilisateur {
 
 	private String login;
 	private String pass;
@@ -19,7 +21,8 @@ public class User {
 		return pass;
 	}
 
-	public boolean isBibli() {
+	@Override
+	public boolean isBibliothecaire() {
 		return bibli;
 	}
 }
