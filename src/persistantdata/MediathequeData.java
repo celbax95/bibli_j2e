@@ -58,25 +58,19 @@ public class MediathequeData implements PersistentMediatheque {
 	// si pas trouvé, renvoie null
 	@Override
 	public Document getDocument(int numDocument) {
-		String req1 = "SELECT type FROM DocType WHERE id = ?";
-		String req2 = "SELECT * FROM Document d, ? t WHERE id = ?";
+
+		String req = "SELECT * FROM Document d, ? t WHERE id = ?";
 		ResultSet res = null;
 		try {
-			PreparedStatement s = c.prepareStatement(req1);
-			s.setInt(1, numDocument);
-			res = s.executeQuery();
 
-			if (!res.next())
+			String tableName = getTableName(numDocument);
+
+			if (tableName == null)
 				return null;
 
-			String tablenName = "";
-			tablenName = res.getString(0);
-
-			if (tablenName.equals(""))
-				return null;
-
-			s = c.prepareStatement(req2);
-			s.setString(1, tablenName);
+			PreparedStatement s = c.prepareStatement(req);
+			s = c.prepareStatement(req);
+			s.setString(1, tableName);
 			s.setInt(2, numDocument);
 			res = s.executeQuery();
 
@@ -88,11 +82,31 @@ public class MediathequeData implements PersistentMediatheque {
 				for (int i = 0; i < nb; i++)
 					m.put(rs.getColumnName(i), res.getObject(i));
 
-				// TODO factory
-
-				return null;
+				return DocFactory.create(tableName, m);
 			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private String getTableName(int numDocument) {
+		String req = "SELECT type FROM DocType WHERE id = ?";
+		ResultSet res = null;
+
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			s.setInt(1, numDocument);
+			res = s.executeQuery();
+
+			if (!res.next())
+				return null;
+
+			String tableName = "";
+			tableName = res.getString(0);
+
+			return tableName;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
