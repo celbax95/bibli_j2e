@@ -2,6 +2,8 @@ package persistantdata;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import mediatheque.Document;
 import mediatheque.Mediatheque;
 import mediatheque.PersistentMediatheque;
 import mediatheque.Utilisateur;
+import user.User;
 
 // classe mono-instance  dont l'unique instance n'est connue que de la bibliotheque
 // via une auto-déclaration dans son bloc static
@@ -54,6 +57,21 @@ public class MediathequeData implements PersistentMediatheque {
 	// si pas trouvé, renvoie null
 	@Override
 	public Utilisateur getUser(String login, String password) {
+		String req = "SELECT log, pass, bibli FROM Utilisateur WHERE login = ? AND pass = ?";
+		ResultSet res = null;
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			s.setString(1, login);
+			s.setString(2, password);
+			res = s.executeQuery();
+
+			if (res.next()) {
+				return new User(res.getString("log"), res.getString("pass"), res.getInt("bibli") == 1 ? true : false);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
