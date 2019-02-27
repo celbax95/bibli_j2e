@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import loader.Loader;
 import mediatheque.Document;
@@ -78,7 +81,15 @@ public class MediathequeData implements PersistentMediatheque {
 			res = s.executeQuery();
 
 			if (res.next()) {
-				// TODO factory doc
+				ResultSetMetaData rs = res.getMetaData();
+				int nb = rs.getColumnCount();
+
+				Map<String, Object> m = new HashMap<>();
+				for (int i = 0; i < nb; i++)
+					m.put(rs.getColumnName(i), res.getObject(i));
+
+				// TODO factory
+
 				return null;
 			}
 
