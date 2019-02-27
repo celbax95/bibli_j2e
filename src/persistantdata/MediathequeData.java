@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
+import loader.Loader;
 import mediatheque.Document;
 import mediatheque.Mediatheque;
 import mediatheque.PersistentMediatheque;
@@ -19,6 +20,7 @@ public class MediathequeData implements PersistentMediatheque {
 	private static Connection c;
 
 	static {
+		c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 		Mediatheque.getInstance().setData(new MediathequeData());
 	}
 
