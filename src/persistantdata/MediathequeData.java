@@ -32,7 +32,7 @@ public class MediathequeData implements PersistentMediatheque {
 		Mediatheque.getInstance().setData(new MediathequeData());
 	}
 
-	private static Connection connectMySQL(String url, String log, String mdp) {
+	public static Connection connectMySQL(String url, String log, String mdp) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {

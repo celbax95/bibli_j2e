@@ -1,5 +1,10 @@
 package persistantdata;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import loader.Loader;
 import mediatheque.Document;
 import mediatheque.EmpruntException;
 import mediatheque.Utilisateur;
@@ -28,9 +33,17 @@ public abstract class Doc implements Document {
 	}
 
 	@Override
-	public void emprunter(Utilisateur arg0) throws EmpruntException {
-		// TODO Auto-generated method stub
+	public void emprunter(Utilisateur u) throws EmpruntException {
+		Connection c = MediathequeData.connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
+		String req = "UPDATE Document SET emprunte = 1 WHERE id = ?";
+		try {
+			PreparedStatement s = c.prepareStatement(req);
+			s.setInt(1, id);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
