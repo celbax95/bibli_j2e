@@ -179,7 +179,7 @@
 		margin-top: 10px;
 	}
 
-	#content.doc .cCourt {
+	#content .doc .cCourt {
 		width: 80px;
 	}
 	#content .doc .cMoy {
@@ -245,7 +245,6 @@
 		margin-bottom: 6px;
 	}
 	#content .btn {
-		background-color: white;
 		width: 120px;
 		height: 40px;
 		margin: auto;
@@ -253,9 +252,13 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		box-shadow: 0 4px rgb(200,200,200);
 		border-radius: 22px;
 		transition: 0.8s;
+	}
+
+	#content .btn.active {
+		background-color: white;
+		box-shadow: 0 4px rgb(200,200,200);
 	}
 	#content .btn.active:hover {
 		background-color: rgb(240,240,240);
@@ -266,6 +269,12 @@
 		box-shadow: 0 3px rgb(150,150,150);
 		transition: 0.08s;
 	}
+	#content .btn.active p {
+		font-size: 16px;
+		font-weight: bold;
+		text-decoration: none;
+		color: black;
+	}
 	#content a {
 		display: block;
 		width: auto;
@@ -275,28 +284,22 @@
 		margin: auto;
 		text-decoration: none;
 	}
-	#content .btn.active p {
-		font-size: 16px;
-		font-weight: bold;
-		text-decoration: none;
-		color: black;
-	}
-	#content .btn {
+	#content .btn.blocked {
 		background-color: rgba(0,0,0,0.4);
-		box-shadow: 0 5px rgb(50,50,50)
+		box-shadow: 0 5px rgb(50,50,50);
 	}
 
-	#content .btn p {
+	#content .btn.blocked p {
 		font-size: 16px;
 		font-weight: bold;
 		text-decoration: none;
 		color: white;
 	}
-	#content .btn:hover {
+	#content .btn.blocked:hover {
 		background-color: rgb(100,50,50);
 		box-shadow: 0 4px rgb(80,40,40);
 	}
-	#content .btn:active {
+	#content .btn.blocked:active {
 		transform: translateY(3px);
 		box-shadow: 0 4px rgb(50,10,10);
 		transition: 0.08s;
@@ -339,7 +342,9 @@
 							<%for (int i = 3, c = o.length; i < c; i++) {%>
 								<pre> <%=o[i].toString() + (((i+1)<c)?",":"")%></pre>
 							<%}%>
-							<div class="action"><a href="?idDoc=<%=o[0].toString()%>"><div class="btn"><p>Emprunter</p></div></a></div>
+							<div class="action"><a href="<%if (!(boolean)o[0]) {%>
+								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%>"
+								><div class="btn <%if (!(boolean)o[0]){%>active<%} else {%>blocked<%}%>"><p>Emprunter</p></div></a></div>
 						</div>
 					</div>
 				</div>
