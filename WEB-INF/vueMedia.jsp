@@ -1,3 +1,15 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import ="java.util.*" %>
+<%@ page import ="user.User" %>
+<%@ page import ="mediatheque.Document" %>
+
+<%
+	List<Document> docs = (List<Document>)request.getAttribute("docs");
+	String nomUser = ((User)request.getSession().getAttribute("user")).getLogin();
+	nomUser = Character.toUpperCase(nomUser.charAt(0)) + nomUser.substring(1, nomUser.length());
+
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -266,7 +278,7 @@
 <body>
 	<div id="user">
 		<div></div>
-		<div><p>Utilisateur</p></div>
+		<div><p><%=nomUser%></p></div>
 
 
 	</div>
