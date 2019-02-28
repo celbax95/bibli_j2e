@@ -36,6 +36,8 @@ public class VueMediatheque extends HttpServlet {
 
 		if (idDoc != null) {
 			emprunter(u, idDoc);
+			resp.sendRedirect("./vueMedia");
+			return;
 		}
 
 		req.setAttribute("bibli", u.isBibliothecaire());

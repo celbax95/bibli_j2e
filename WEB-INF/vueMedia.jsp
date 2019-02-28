@@ -216,8 +216,7 @@
 		border-radius: 8px;
 		visibility: hidden;
 		opacity: 0;
-		transition-duration: 0.5s;
-		transition-delay: 0.5s;
+		transition-duration: 0.2s;
 		overflow: hidden;
 	}
 
