@@ -12,14 +12,16 @@ import mediatheque.Utilisateur;
 public abstract class Doc implements Document {
 
 	protected int id;
+	protected String type;
 	protected String nom;
 	protected String auteur;
 	protected int prix;
 	protected boolean emprunte;
 
-	public Doc(int id, String nom, String auteur, int prix, boolean emprunte) {
+	public Doc(int id, String type, String nom, String auteur, int prix, boolean emprunte) {
 		super();
 		this.id = id;
+		this.type = type;
 		this.nom = nom;
 		this.auteur = auteur;
 		this.prix = prix;
@@ -28,7 +30,7 @@ public abstract class Doc implements Document {
 
 	protected Object[] affiche(Object[] oChild) {
 
-		Object[] oThis = new Object[] { id, nom, auteur, prix, emprunte };
+		Object[] oThis = new Object[] { id, type, nom, auteur, prix, emprunte };
 
 		int length = oThis.length + oChild.length;
 		Object[] o = new Object[length];

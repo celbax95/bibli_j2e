@@ -3,8 +3,8 @@ package persistantdata;
 public class DVD extends Doc {
 	private String resolution;
 
-	public DVD(int id, String nom, String auteur, int prix, boolean emprunte, String resolution) {
-		super(id, nom, auteur, prix, emprunte);
+	public DVD(int id, String type, String nom, String auteur, int prix, boolean emprunte, String resolution) {
+		super(id, type, nom, auteur, prix, emprunte);
 		this.resolution = resolution;
 	}
 
