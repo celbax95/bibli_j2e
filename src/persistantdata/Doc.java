@@ -11,12 +11,12 @@ import mediatheque.Utilisateur;
 
 public abstract class Doc implements Document {
 
-	protected int id;
+	protected Integer id;
 	protected String type;
 	protected String nom;
 	protected String auteur;
-	protected int prix;
-	protected boolean emprunte;
+	protected Integer prix;
+	protected Boolean emprunte;
 
 	public Doc(int id, String type, String nom, String auteur, int prix, boolean emprunte) {
 		super();
