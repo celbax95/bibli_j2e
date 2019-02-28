@@ -19,6 +19,11 @@ public class Menu extends HttpServlet {
 		HttpSession ses = req.getSession();
 		User u = (User) ses.getAttribute("user");
 
+		if (u == null) {
+			resp.sendRedirect("./log");
+			return;
+		}
+
 		if (!u.isBibliothecaire()) {
 			req.setAttribute("b",
 					new String[][] { { "Ma médiathèque", "./vueMedia" }, { "Mes emprunts", "./emprunts" } });

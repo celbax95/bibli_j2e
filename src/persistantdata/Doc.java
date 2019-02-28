@@ -30,7 +30,7 @@ public abstract class Doc implements Document {
 
 	protected Object[] affiche(Object[] oChild) {
 
-		Object[] oThis = new Object[] { id, type, nom, auteur, prix };
+		Object[] oThis = new Object[] { id, type, nom, auteur, prix + "€" };
 
 		int length = oThis.length + oChild.length;
 		Object[] o = new Object[length];

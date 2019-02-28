@@ -20,6 +20,11 @@ public class VueMediatheque extends HttpServlet {
 		HttpSession ses = req.getSession();
 		User u = (User) ses.getAttribute("user");
 
+		if (u == null) {
+			resp.sendRedirect("./log");
+			return;
+		}
+
 		req.setAttribute("bibli", u.isBibliothecaire());
 		req.setAttribute("docs", Mediatheque.getInstance().tousLesDocuments());
 
