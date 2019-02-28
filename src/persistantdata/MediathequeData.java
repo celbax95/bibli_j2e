@@ -110,7 +110,7 @@ public class MediathequeData implements PersistentMediatheque {
 	// si pas trouvé, renvoie null
 	@Override
 	public Utilisateur getUser(String login, String password) {
-		String req = "SELECT login, pass, bibli FROM Utilisateur WHERE login = ? AND pass = ?";
+		String req = "SELECT id, login, pass, bibli FROM Utilisateur WHERE login = ? AND pass = ?";
 		ResultSet res = null;
 		try {
 			PreparedStatement s = c.prepareStatement(req);
@@ -119,7 +119,8 @@ public class MediathequeData implements PersistentMediatheque {
 			res = s.executeQuery();
 
 			if (res.next()) {
-				return new User(res.getString("login"), res.getString("pass"), res.getInt("bibli") == 1 ? true : false);
+				return new User(res.getInt("id"), res.getString("login"), res.getString("pass"),
+						res.getInt("bibli") == 1 ? true : false);
 			}
 
 		} catch (SQLException e) {
