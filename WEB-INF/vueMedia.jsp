@@ -198,6 +198,7 @@
 
 	.allDocInfo {
 		background-color: gray;
+		z-index: 1;
 		float: left;
 		position: absolute;
 		top: -20px;
@@ -309,9 +310,10 @@
 						<div class="inlineInfo">
 							<pre><%=o[1].toString()%> :</pre>
 							<%for (int i = 2, c = o.length; i < c; i++) {%>
-								<pre> <%=o[i].toString()%>,</pre>
+								<pre> <%=o[i].toString() + (((i+1)<c)?",":"")%></pre>
 							<%}%>
-						<div class="action"><a href="#"><div class="btn"><p>Emprunter</p></div></a></div>
+							<div class="action"><a href="#"><div class="btn"><p>Emprunter</p></div></a></div>
+						</div>
 					</div>
 				</div>
 				<%}%>
