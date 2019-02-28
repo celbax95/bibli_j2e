@@ -312,7 +312,7 @@
 						<div class="inline cCourt"><p><%=o[1].toString()%></p></div>
 						<div class="inline cLong"><p><%=o[2].toString()%></p></div>
 						<div class="inline cLong"><p><%=o[3].toString()%></p></div>
-						<div class="inline cCourt"><p><%=o[4].toString()+"€"%></p></div>
+						<div class="inline cCourt"><p><%=o[4].toString()%></p></div>
 					</div>
 					<div class="allDocInfo">
 						<div class="inlineInfo">
