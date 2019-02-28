@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Loïc/Documents/Programmation/Java/projetJavaEE/servlet-api.jar"/>
 	<classpathentry kind="lib" path="mysql-connector-java-8.0.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Loïc/Documents/Programmation/apache-tomcat/webapps/bibli_j2e/mediathek.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
