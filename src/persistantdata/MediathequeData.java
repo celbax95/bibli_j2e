@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,19 +49,21 @@ public class MediathequeData implements PersistentMediatheque {
 	@Override
 	public Document getDocument(int numDocument) {
 
-		String req = "SELECT * FROM Document d, ? t WHERE id = ?";
+		String req = "SELECT d.*, t.* FROM Document d, TABLE as t WHERE d.id = ? && t.idDoc = d.id";
 		ResultSet res = null;
 		try {
 
 			String tableName = getTableName(numDocument);
 
-			if (tableName == null)
+			if (tableName == null) {
 				return null;
+			}
+
+			req = req.replaceFirst("TABLE", tableName);
 
 			PreparedStatement s = c.prepareStatement(req);
 			s = c.prepareStatement(req);
-			s.setString(1, tableName);
-			s.setInt(2, numDocument);
+			s.setInt(1, numDocument);
 			res = s.executeQuery();
 
 			if (res.next()) {
@@ -68,7 +71,8 @@ public class MediathequeData implements PersistentMediatheque {
 				int nb = rs.getColumnCount();
 
 				Map<String, Object> m = new HashMap<>();
-				for (int i = 0; i < nb; i++)
+				m.put("type", tableName);
+				for (int i = 1; i <= nb; i++)
 					m.put(rs.getColumnName(i), res.getObject(i));
 
 				return DocFactory.create(tableName, m);
@@ -81,7 +85,7 @@ public class MediathequeData implements PersistentMediatheque {
 	}
 
 	private String getTableName(int numDocument) {
-		String req = "SELECT type FROM DocType WHERE id = ?";
+		String req = "SELECT type FROM DocType WHERE idDoc = ?";
 		ResultSet res = null;
 
 		try {
@@ -93,7 +97,7 @@ public class MediathequeData implements PersistentMediatheque {
 				return null;
 
 			String tableName = "";
-			tableName = res.getString(0);
+			tableName = res.getString(1);
 
 			return tableName;
 		} catch (SQLException e) {
@@ -167,7 +171,7 @@ public class MediathequeData implements PersistentMediatheque {
 
 		List<Document> docs = new ArrayList<>();
 
-		String req = "SELECT d.id, dt.type FROM Document d, DocType dt";
+		String req = "SELECT d.id FROM Document d";
 		ResultSet res = null;
 		try {
 			PreparedStatement s = c.prepareStatement(req);
@@ -175,10 +179,13 @@ public class MediathequeData implements PersistentMediatheque {
 
 			List<Integer> ids = new ArrayList<>();
 			while (res.next())
-				ids.add(res.getInt(0));
+				ids.add(res.getInt(1));
 
 			for (Integer idDoc : ids)
 				docs.add(getDocument(idDoc));
+
+			System.out.println(getDocument(1).affiche()[0]);
+			System.out.println(docs.get(0).affiche()[1]);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
