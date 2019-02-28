@@ -185,9 +185,6 @@ public class MediathequeData implements PersistentMediatheque {
 			for (Integer idDoc : ids)
 				docs.add(getDocument(idDoc));
 
-			System.out.println(getDocument(1).affiche()[0]);
-			System.out.println(docs.get(0).affiche()[1]);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
