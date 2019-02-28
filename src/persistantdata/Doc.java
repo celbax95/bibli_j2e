@@ -30,7 +30,7 @@ public abstract class Doc implements Document {
 
 	protected Object[] affiche(Object[] oChild) {
 
-		Object[] oThis = new Object[] { id, type, nom, auteur, prix + "€" };
+		Object[] oThis = new Object[] { emprunte, id, type, nom, auteur, prix + "€" };
 
 		int length = oThis.length + oChild.length;
 		Object[] o = new Object[length];
@@ -43,6 +43,9 @@ public abstract class Doc implements Document {
 
 	@Override
 	public void emprunter(Utilisateur u) throws EmpruntException {
+		if (u.isBibliothecaire())
+			throw new EmpruntException();
+
 		Connection c = MediathequeData.connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
 		String req = "UPDATE Document SET emprunte = 1 WHERE id = ?";

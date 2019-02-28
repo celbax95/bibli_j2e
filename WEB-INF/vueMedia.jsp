@@ -244,8 +244,7 @@
 		margin-top: 18px;
 		margin-bottom: 6px;
 	}
-
-	.btn {
+	#content .btn {
 		background-color: white;
 		width: 120px;
 		height: 40px;
@@ -258,11 +257,11 @@
 		border-radius: 22px;
 		transition: 0.8s;
 	}
-	#content .btn:hover {
+	#content .btn.active:hover {
 		background-color: rgb(240,240,240);
 		box-shadow: 0 4px rgb(180,180,180);
 	}
-	#content .btn:active {
+	#content .btn.active:active {
 		transform: translateY(3px);
 		box-shadow: 0 3px rgb(150,150,150);
 		transition: 0.08s;
@@ -276,11 +275,31 @@
 		margin: auto;
 		text-decoration: none;
 	}
-	#content .btn p {
+	#content .btn.active p {
 		font-size: 16px;
 		font-weight: bold;
 		text-decoration: none;
 		color: black;
+	}
+	#content .btn {
+		background-color: rgba(0,0,0,0.4);
+		box-shadow: 0 5px rgb(50,50,50)
+	}
+
+	#content .btn p {
+		font-size: 16px;
+		font-weight: bold;
+		text-decoration: none;
+		color: white;
+	}
+	#content .btn:hover {
+		background-color: rgb(100,50,50);
+		box-shadow: 0 4px rgb(80,40,40);
+	}
+	#content .btn:active {
+		transform: translateY(3px);
+		box-shadow: 0 4px rgb(50,10,10);
+		transition: 0.08s;
 	}
 </style>
 <body>
@@ -309,18 +328,18 @@
 				%>
 				<div class="doc">
 					<div class="stdDocInfo">
-						<div class="inline cCourt"><p><%=o[1].toString()%></p></div>
-						<div class="inline cLong"><p><%=o[2].toString()%></p></div>
+						<div class="inline cCourt"><p><%=o[2].toString()%></p></div>
 						<div class="inline cLong"><p><%=o[3].toString()%></p></div>
-						<div class="inline cCourt"><p><%=o[4].toString()%></p></div>
+						<div class="inline cLong"><p><%=o[4].toString()%></p></div>
+						<div class="inline cCourt"><p><%=o[5].toString()%></p></div>
 					</div>
 					<div class="allDocInfo">
 						<div class="inlineInfo">
-							<pre><%=o[1].toString()%> :</pre>
-							<%for (int i = 2, c = o.length; i < c; i++) {%>
+							<pre><%=o[2].toString()%> :</pre>
+							<%for (int i = 3, c = o.length; i < c; i++) {%>
 								<pre> <%=o[i].toString() + (((i+1)<c)?",":"")%></pre>
 							<%}%>
-							<div class="action"><a href="#"><div class="btn"><p>Emprunter</p></div></a></div>
+							<div class="action"><a href="?idDoc=<%=o[0].toString()%>"><div class="btn"><p>Emprunter</p></div></a></div>
 						</div>
 					</div>
 				</div>
