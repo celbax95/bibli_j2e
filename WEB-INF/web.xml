@@ -32,4 +32,15 @@
 <url-pattern>/menu </url-pattern>
 </servlet-mapping>
 
+
+<servlet>
+<servlet-name> vueMedia </servlet-name>
+<servlet-class> vuemedia.VueMediatheque </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> vueMedia </servlet-name>
+<url-pattern>/vueMedia </url-pattern>
+</servlet-mapping>
+
 </web-app>

@@ -1,4 +1,4 @@
-package menu;
+package vuemedia;
 
 import java.io.IOException;
 
@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mediatheque.Mediatheque;
 import user.User;
 
-public class Menu extends HttpServlet {
+public class VueMediatheque extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,16 +20,11 @@ public class Menu extends HttpServlet {
 		HttpSession ses = req.getSession();
 		User u = (User) ses.getAttribute("user");
 
-		if (!u.isBibliothecaire()) {
-			req.setAttribute("b",
-					new String[][] { { "Ma médiathèque", "./vueMedia" }, { "Mes emprunts", "./emprunts" } });
+		req.setAttribute("bibli", u.isBibliothecaire());
+		req.setAttribute("docs", Mediatheque.getInstance().tousLesDocuments());
 
-		} else {
-			req.setAttribute("b",
-					new String[][] { { "Médiathèque", "./vueMedia" }, { "Ajouter des documents", "./emprunts" } });
-		}
-
-		this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/vueMedia.jsp").forward(req, resp);
 
 	}
+
 }
