@@ -308,7 +308,7 @@
 					<div class="allDocInfo">
 						<div class="inlineInfo">
 							<pre><%=o[1].toString()%> :</pre>
-							<%for (int i = 2, c = o.lenght; i < c; i++) {%>
+							<%for (int i = 2, c = o.length; i < c; i++) {%>
 								<pre> <%=o[i].toString()%>,</pre>
 							<%}%>
 						<div class="action"><a href="#"><div class="btn"><p>Emprunter</p></div></a></div>

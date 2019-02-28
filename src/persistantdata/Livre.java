@@ -10,6 +10,6 @@ public class Livre extends Doc {
 
 	@Override
 	public Object[] affiche() {
-		return super.affiche(new Object[] { editeur });
+		return super.affiche(new Object[] { "Editeur : " + editeur });
 	}
 }

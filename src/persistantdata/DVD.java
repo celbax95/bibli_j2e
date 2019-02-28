@@ -10,6 +10,6 @@ public class DVD extends Doc {
 
 	@Override
 	public Object[] affiche() {
-		return super.affiche(new Object[] { resolution });
+		return super.affiche(new Object[] { "Resolution : " + resolution });
 	}
 }

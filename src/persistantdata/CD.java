@@ -10,6 +10,6 @@ public class CD extends Doc {
 
 	@Override
 	public Object[] affiche() {
-		return super.affiche(new Object[] { album });
+		return super.affiche(new Object[] { "Album : " + album });
 	}
 }
