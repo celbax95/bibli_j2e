@@ -263,8 +263,8 @@
 		box-shadow: 0 4px rgb(180,180,180);
 	}
 	#content .btn:active {
-		transform: translateY(2px);
-		box-shadow: 0 2px rgb(150,150,150);
+		transform: translateY(3px);
+		box-shadow: 0 3px rgb(150,150,150);
 		transition: 0.08s;
 	}
 	#content a {
@@ -272,7 +272,7 @@
 		width: auto;
 		height: auto;
 		overflow: hidden;
-		padding-bottom: 5px;
+		padding-bottom: 9px;
 		margin: auto;
 		text-decoration: none;
 	}
@@ -290,7 +290,7 @@
 			<div><p><%=nomUser%></p></div>
 		</a>
 	</div>
-	
+
 	<div id="titre"><a href="/bibli_j2e/menu">
 	<h1>Média2e</h1>
 	</a></div>
