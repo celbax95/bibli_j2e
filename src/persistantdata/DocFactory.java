@@ -12,12 +12,12 @@ public class DocFactory {
 					(int) m.get("prix"),
 					((int) m.get("emprunte")) == 1, (String) m.get("album"));
 		case "DVD":
-			return new CD((int) m.get("id"), (String) m.get("type"), (String) m.get("nom"), (String) m.get("auteur"),
+			return new DVD((int) m.get("id"), (String) m.get("type"), (String) m.get("nom"), (String) m.get("auteur"),
 					(int) m.get("prix"),
 					((int) m.get("emprunte")) == 1, (String) m.get("resolution"));
 
 		case "Livre":
-			return new CD((int) m.get("id"), (String) m.get("type"), (String) m.get("nom"), (String) m.get("auteur"),
+			return new Livre((int) m.get("id"), (String) m.get("type"), (String) m.get("nom"), (String) m.get("auteur"),
 					(int) m.get("prix"),
 					((int) m.get("emprunte")) == 1, (String) m.get("editeur"));
 		default:
