@@ -61,7 +61,7 @@ public class VueMediatheque extends HttpServlet {
 		try {
 			m.emprunt(m.getDocument(idDoc), u);
 		} catch (EmpruntException e) {
-			e.printStackTrace();
+			System.out.println("Impossible d'emprunter ce document.");
 		}
 	}
 
