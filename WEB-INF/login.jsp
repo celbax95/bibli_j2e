@@ -127,6 +127,7 @@
 
 	p.error {
 		color: red;
+		margin-bottom: 20px;
 	}
 </style>
 

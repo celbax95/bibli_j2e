@@ -39,21 +39,6 @@ public class MediathequeData implements PersistentMediatheque {
 		Mediatheque.getInstance().setData(new MediathequeData());
 	}
 
-	public static Connection connectMySQL(String url, String log, String mdp) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			return DriverManager.getConnection(url, log, mdp);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	private MediathequeData() {
 	}
 
@@ -121,7 +106,7 @@ public class MediathequeData implements PersistentMediatheque {
 	// si pas trouvé, renvoie null
 	@Override
 	public Utilisateur getUser(String login, String password) {
-		String req = "SELECT log, pass, bibli FROM Utilisateur WHERE login = ? AND pass = ?";
+		String req = "SELECT login, pass, bibli FROM Utilisateur WHERE login = ? AND pass = ?";
 		ResultSet res = null;
 		try {
 			PreparedStatement s = c.prepareStatement(req);
@@ -130,7 +115,7 @@ public class MediathequeData implements PersistentMediatheque {
 			res = s.executeQuery();
 
 			if (res.next()) {
-				return new User(res.getString("log"), res.getString("pass"), res.getInt("bibli") == 1 ? true : false);
+				return new User(res.getString("login"), res.getString("pass"), res.getInt("bibli") == 1 ? true : false);
 			}
 
 		} catch (SQLException e) {
@@ -182,7 +167,7 @@ public class MediathequeData implements PersistentMediatheque {
 
 		List<Document> docs = new ArrayList<>();
 
-		String req = "SELECT id FROM Document";
+		String req = "SELECT d.id, dt.type FROM Document d, DocType dt";
 		ResultSet res = null;
 		try {
 			PreparedStatement s = c.prepareStatement(req);
@@ -199,5 +184,20 @@ public class MediathequeData implements PersistentMediatheque {
 			e.printStackTrace();
 		}
 		return docs;
+	}
+
+	public static Connection connectMySQL(String url, String log, String mdp) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			return DriverManager.getConnection(url, log, mdp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

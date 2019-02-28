@@ -28,11 +28,14 @@ public class Connexion extends HttpServlet {
 		String mdp = req.getParameter("pwd");
 
 		User user = null;
+
 		user = (User) m.getUser(nom, mdp);
 
 		if (user != null) {
 			ses.setAttribute("user", user);
 		}
+
+		req.setAttribute("logIn", user != null);
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/connexion.jsp").forward(req, resp);
 	}
