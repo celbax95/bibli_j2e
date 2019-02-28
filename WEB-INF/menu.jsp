@@ -104,6 +104,8 @@
 		font-size: 25px;
 		font-weight: bold;
 		padding-bottom: 5px;
+		padding-left: 6px;
+		padding-right: 6px;
 		border-bottom: 1.5px solid white;
 		text-shadow: 0 0 5px rgba(255,255,255,0.1);
 	}
