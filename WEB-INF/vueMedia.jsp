@@ -295,20 +295,26 @@
 			</form>
 
 			<div id="docList">
+				<%for (Document d : docs) {
+				Object[] o = d.affiche();
+				%>
 				<div class="doc">
 					<div class="stdDocInfo">
-						<div class="inline cCourt"><p>Livre</p></div>
-						<div class="inline cLong"><p>Le labyrinthe</p></div>
-						<div class="inline cLong"><p>James Dashner</p></div>
-						<div class="inline cCourt"><p>19,49€</p></div>
+						<div class="inline cCourt"><p><%=o[1].toString()%></p></div>
+						<div class="inline cLong"><p><%=o[2].toString()%></p></div>
+						<div class="inline cLong"><p><%=o[3].toString()%></p></div>
+						<div class="inline cCourt"><p><%=o[4].toString()+"€"%></p></div>
 					</div>
 					<div class="allDocInfo">
-						<div class="inlineInfo"><pre>Livre :</pre>
-							<pre> Le Labyrinthe,</pre><pre> James Dashner,</pre>
-							<pre> 19.49€, </pre><pre>Editeur : Dell Publishing</pre></div>
+						<div class="inlineInfo">
+							<pre><%=o[1].toString()%> :</pre>
+							<%for (int i = 2, c = o.lenght; i < c; i++) {%>
+								<pre> <%=o[i].toString()%>,</pre>
+							<%}%>
 						<div class="action"><a href="#"><div class="btn"><p>Emprunter</p></div></a></div>
 					</div>
 				</div>
+				<%}%>
 			</div>
 		</div>
 	</div>
