@@ -78,7 +78,7 @@
 								<pre> <%=o[i].toString() + (((i+1)<c2)?",":"")%></pre>
 							<%}%>
 							<div class="action"><a href="<%if (!(boolean)o[0]) {%>
-								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%>&rech=<%=rech!=null?rech:""%>"
+								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%><%=rech!=null?"&rech="+rech:""%>"
 								><div class="btn <%if (!(boolean)o[0]){%>active<%} else {%>blocked<%}%>"><p>Emprunter</p></div></a></div>
 						</div>
 					</div>

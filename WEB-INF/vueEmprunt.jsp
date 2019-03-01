@@ -78,7 +78,7 @@
 								<pre> <%=o[i].toString() + (((i+1)<c2)?",":"")%></pre>
 							<%}%>
 							<div class="action">
-								<a href="?idDoc=<%=o[1].toString()%>&rech=<%=rech!=null?rech:""%>">
+								<a href="?idDoc=<%=o[1].toString()%><%=rech!=null?"&rech="+rech:""%>">
 									<div class="btn active"><p>Rendre</p></div>
 								</a>
 							</div>
