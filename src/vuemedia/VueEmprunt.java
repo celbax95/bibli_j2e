@@ -18,7 +18,7 @@ import mediatheque.EmpruntException;
 import mediatheque.Mediatheque;
 import user.User;
 
-public class vueEmprunt extends HttpServlet {
+public class VueEmprunt extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

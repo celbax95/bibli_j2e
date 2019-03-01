@@ -1,0 +1,186 @@
+.inline {
+	display: inline-block;
+}
+
+#content {
+	width: 100%;
+	height: 900px;
+	margin: auto;
+}
+
+#rechForm label {
+	font-size: 18px;
+}
+
+#rechForm input#rech {
+	border: none;
+	background-color: transparent;
+	color: white;
+	font-size: 17px;
+	border-bottom: 1px solid white;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	margin-left: 5px;
+}
+
+#rechForm button {
+	background-color: transparent;
+	border: none;
+	width: 20px;
+	height: 20px;
+	background-image: url("../images/loupe.png");
+	background-size: cover;
+}
+
+#content #list {
+	background-color: rgba(255,255,255,0.15);
+	width: 900px;
+	margin: auto;
+	padding: 20px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border: 5px solid lightgray;
+	border-radius: 30px;
+}
+
+#content #list form {
+	color: white;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+#content #docList {
+	width: 600px;
+	margin:auto;
+	text-align: center;
+	color: white;
+}
+
+#content #docList .doc:not(:nth-child(1)) {
+	margin-top: 10px;
+}
+
+#content .doc .cCourt {
+	width: 80px;
+}
+#content .doc .cMoy {
+	width: 120px;
+}
+#content .doc .cLong {
+	width: 200px;
+}
+
+.doc {
+	position: relative;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border: 2px solid black;
+	border-radius: 8px;
+	transition: 1s;
+}
+
+.doc p, .doc pre {
+	font-family: "Times";
+	font-size: 18px;
+}
+
+.allDocInfo {
+	background-color: gray;
+	z-index: 1;
+	float: left;
+	position: absolute;
+	top: -20px;
+	left: -5%;
+	width: 110%;
+	padding: 8px;
+	border: 2px solid black;
+	border-radius: 8px;
+	visibility: hidden;
+	opacity: 0;
+	transition-duration: 0.2s;
+	overflow: hidden;
+}
+
+.doc:active .allDocInfo {
+	transition-delay: 0s;
+	visibility: visible;
+	opacity: 1;
+}
+
+.doc .allDocInfo:hover {
+	visibility: visible;
+	opacity: 1;
+}
+
+.inlineInfo {
+	margin-top: 4px;
+}
+
+.inlineInfo pre {
+	display: inline-block;
+}
+
+.action {
+	margin-top: 18px;
+	margin-bottom: 6px;
+}
+#content .btn {
+	width: 120px;
+	height: 40px;
+	margin: auto;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 22px;
+	transition: 0.8s;
+}
+
+#content .btn.active {
+	background-color: white;
+	box-shadow: 0 4px rgb(200,200,200);
+}
+#content .btn.active:hover {
+	background-color: rgb(240,240,240);
+	box-shadow: 0 4px rgb(180,180,180);
+}
+#content .btn.active:active {
+	transform: translateY(3px);
+	box-shadow: 0 3px rgb(150,150,150);
+	transition: 0.08s;
+}
+#content .btn.active p {
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
+#content a {
+	display: block;
+	width: auto;
+	height: auto;
+	overflow: hidden;
+	padding-bottom: 9px;
+	margin: auto;
+	text-decoration: none;
+}
+#content .btn.blocked {
+	background-color: rgba(0,0,0,0.4);
+	box-shadow: 0 5px rgb(50,50,50);
+}
+
+#content .btn.blocked p {
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+}
+#content .btn.blocked:hover {
+	background-color: rgb(100,50,50);
+	box-shadow: 0 4px rgb(80,40,40);
+}
+#content .btn.blocked:active {
+	transform: translateY(3px);
+	box-shadow: 0 4px rgb(50,10,10);
+	transition: 0.08s;
+}

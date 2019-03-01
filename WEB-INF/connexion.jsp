@@ -11,10 +11,6 @@
 	<title></title>
 </head>
 
-<style type="text/css">
-
-</style>
-
 <body>
 	<% if (logIn) { %>
 		<h1>Connecté !</h1>

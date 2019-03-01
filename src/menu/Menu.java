@@ -26,14 +26,14 @@ public class Menu extends HttpServlet {
 
 		if (!u.isBibliothecaire()) {
 			req.setAttribute("b",
-					new String[][] { { "Ma médiathèque", "./vueMedia" }, { "Mes emprunts", "./vueEmprunts } });
+					new String[][] { { "Ma médiathèque", "./vueMedia" }, { "Mes emprunts", "./vueEmprunt" } });
 
-					} else {
-						req.setAttribute("b",
-								new String[][] { { "Médiathèque", "./vueMedia" }, { "Ajouter des documents", "./emprunts" } });
-					}
-
-					this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);
-
-			}
+		} else {
+			req.setAttribute("b",
+					new String[][] { { "Médiathèque", "./vueMedia" }, { "Ajouter des documents", "./emprunts" } });
 		}
+
+		this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);
+
+	}
+}

@@ -47,4 +47,15 @@
 <url-pattern>/vueMedia </url-pattern>
 </servlet-mapping>
 
+
+<servlet>
+<servlet-name> vueEmprunt </servlet-name>
+<servlet-class> vuemedia.VueEmprunt </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> vueEmprunt </servlet-name>
+<url-pattern>/vueEmprunt </url-pattern>
+</servlet-mapping>
+
 </web-app>

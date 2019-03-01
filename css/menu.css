@@ -1,0 +1,51 @@
+	#content {
+		width: 100%;
+		height: 900px;
+		margin: auto;
+	}
+
+	#content .mab {
+		background-color: white;
+		width: 400px;
+		height: 70px;
+		margin: auto;
+		margin-top: 12px;
+		margin-bottom: 12px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		box-shadow: 0 8px rgb(200,200,200);
+		border-radius: 20px;
+		transition: 0.8s;
+	}
+
+	#content .mab:hover {
+		background-color: rgb(240,240,240);
+		box-shadow: 0 8px rgb(180,180,180);
+
+	}
+
+	#content .mab:active {
+		transform: translateY(5px);
+		box-shadow: 0 5px rgb(150,150,150);
+		transition: 0.08s;
+	}
+
+	#content a {
+		display: block;
+		width: 400px;
+		height: 70px;
+		margin: auto;
+		text-decoration: none;
+	}
+	#content .mab p {
+		font-size: 22px;
+		font-weight: bold;
+		text-decoration: none;
+		color: black;
+	}
+
+	#content .space {
+		margin-top: 50px; 
+	}
