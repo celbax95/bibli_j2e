@@ -34,12 +34,15 @@ public class VueMediatheque extends HttpServlet {
 
 		Integer idDoc = (req.getParameter("idDoc") != null ? Integer.valueOf((req.getParameter("idDoc"))) : null);
 
+		String rech = req.getParameter("rech");
+
 		if (idDoc != null) {
 			emprunter(u, idDoc);
-			resp.sendRedirect("./vueMedia");
+			resp.sendRedirect("./vueMedia" + (rech != null ? "?rech=" + rech : ""));
 			return;
 		}
 
+		req.setAttribute("rech", rech);
 		req.setAttribute("bibli", u.isBibliothecaire());
 		req.setAttribute("docs", Mediatheque.getInstance().tousLesDocuments());
 

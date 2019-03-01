@@ -71,6 +71,7 @@
 }
 
 .doc {
+	background-color: rgba(255,255,255,0.1);
 	position: relative;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -82,6 +83,14 @@
 .doc p, .doc pre {
 	font-family: "Times";
 	font-size: 18px;
+}
+
+.doc.grayed {
+	background-color: transparent;
+}
+
+.doc.grayed p {
+	color: rgb(200,200,200);
 }
 
 .allDocInfo {

@@ -64,7 +64,7 @@
 
 				%>
 
-				<div class="doc">
+				<div class="doc <%=(Boolean)o[0]?"grayed":""%>">
 					<div class="stdDocInfo">
 						<div class="inline cCourt"><p><%=o[2].toString()%></p></div>
 						<div class="inline cLong"><p><%=o[3].toString()%></p></div>
@@ -78,7 +78,7 @@
 								<pre> <%=o[i].toString() + (((i+1)<c2)?",":"")%></pre>
 							<%}%>
 							<div class="action"><a href="<%if (!(boolean)o[0]) {%>
-								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%>"
+								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%>&rech=<%=rech!=null?rech:""%>"
 								><div class="btn <%if (!(boolean)o[0]){%>active<%} else {%>blocked<%}%>"><p>Emprunter</p></div></a></div>
 						</div>
 					</div>
