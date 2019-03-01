@@ -13,6 +13,7 @@ public class User implements Utilisateur {
 		this.id = id;
 		this.login = login;
 		this.pass = pass;
+		this.bibli = bibli;
 	}
 
 	public int getId() {
