@@ -10,6 +10,8 @@
 	
 	String rech = request.getParameter("rech")!=null?(String)request.getParameter("rech").toLowerCase():null;
 	String[] rechT = rech!=null?rech.split("\\+"):null;
+
+	Boolean bibli = (Boolean)request.getAttribute("bibli");
 %>
 
 <!DOCTYPE html>
@@ -77,9 +79,11 @@
 							<%for (int i = 3, c2 = o.length; i < c2; i++) {%>
 								<pre> <%=o[i].toString() + (((i+1)<c2)?",":"")%></pre>
 							<%}%>
+							<%if (!bibli) {%>
 							<div class="action"><a href="<%if (!(boolean)o[0]) {%>
 								?idDoc=<%=o[1].toString()%><%} else {%>#<%}%><%=rech!=null?"&rech="+rech:""%>"
 								><div class="btn <%if (!(boolean)o[0]){%>active<%} else {%>blocked<%}%>"><p>Emprunter</p></div></a></div>
+							<%}%>
 						</div>
 					</div>
 				</div>
