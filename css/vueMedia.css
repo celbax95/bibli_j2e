@@ -77,7 +77,6 @@
 	padding-bottom: 2px;
 	border: 2px solid black;
 	border-radius: 8px;
-	transition: 1s;
 }
 
 .doc p, .doc pre {
@@ -106,12 +105,11 @@
 	border-radius: 8px;
 	visibility: hidden;
 	opacity: 0;
-	transition-duration: 0.2s;
 	overflow: hidden;
 }
 
 .doc:active .allDocInfo {
-	transition-delay: 0s;
+	transition-duration: 0.2s;
 	visibility: visible;
 	opacity: 1;
 }
