@@ -30,7 +30,7 @@ public class Menu extends HttpServlet {
 
 		} else {
 			req.setAttribute("b",
-					new String[][] { { "Médiathèque", "./vueMedia" }, { "Ajouter des documents", "./emprunts" } });
+					new String[][] { { "Médiathèque", "./vueMedia" }, { "Ajouter des documents", "./vueAddDoc" } });
 		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/menu.jsp").forward(req, resp);

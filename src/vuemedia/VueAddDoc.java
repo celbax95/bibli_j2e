@@ -22,7 +22,7 @@ import mediatheque.EmpruntException;
 import mediatheque.Mediatheque;
 import user.User;
 
-public class AddDoc extends HttpServlet {
+public class VueAddDoc extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,11 +47,12 @@ public class AddDoc extends HttpServlet {
 			setColumnInfos(type, colN, colT);
 		}
 
+		req.setAttribute("types", types);
 		req.setAttribute("colN", colN);
 		req.setAttribute("colT", colT);
 		req.setAttribute("bibli", u.isBibliothecaire());
 
-		this.getServletContext().getRequestDispatcher("/WEB-INF/vueMedia.jsp").forward(req, resp);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/vueAddDoc.jsp").forward(req, resp);
 	}
 
 	private List<String> getTypes() {

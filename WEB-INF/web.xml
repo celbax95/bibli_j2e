@@ -58,4 +58,14 @@
 <url-pattern>/vueEmprunt </url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name> vueAddDoc </servlet-name>
+<servlet-class> vuemedia.VueAddDoc </servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name> vueAddDoc </servlet-name>
+<url-pattern>/vueAddDoc </url-pattern>
+</servlet-mapping>
+
 </web-app>
