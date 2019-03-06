@@ -8,11 +8,13 @@
 	String nomUser = ((User)request.getSession().getAttribute("user")).getLogin();
 	nomUser = Character.toUpperCase(nomUser.charAt(0)) + nomUser.substring(1, nomUser.length());
 
-	String docType = (String)request.getAttribute("docType");
+	String type = (String)request.getParameter("type");
 	List<String> types = (List<String>)request.getAttribute("types");
 
 	List<String> colN = (List<String>)request.getAttribute("colN");
 	List<String> colT = (List<String>)request.getAttribute("colT");
+
+	List<Integer> err = (List<Integer>)request.getAttribute("err");
 
 	Boolean bibli = (Boolean)request.getAttribute("bibli");
 %>
@@ -133,22 +135,33 @@
 		margin-top: 40px;
 	}
 
+	#content .input:not(:last-child) {
+		margin-bottom: 20px;
+	}
+
 	#content .input label {
-		width: 150px;
-		display: inline-block;
+		width: 100%;
+		display: block;
 		color: white;
 		font-size: 18px;
-		height: 30px;
+		padding-bottom: 5px;
+		text-align: center;
+	}
+	#content .input #centerinp {
+		text-align: center;
 	}
 	#content .input input {
-		background-color: rgb(200,200,200);
+		background-color: transparent;
 		width: 345px;
 		font-size: 17px;
-		padding: 2px;
 		padding-left: 8px;
 		padding-right: 8px;
-		border: 1px solid black;
-		border-radius: 5px;
+		padding-bottom: 4px;
+		margin: auto;
+		color: white;
+		text-align: center;
+		border: 0;
+		border-bottom: 1.5px solid white;
 	}
 
 	#content #submit {
@@ -210,7 +223,7 @@
 		<div id="content2">
 			<div class="list">
 				<div class="headList">
-					<p><%=docType==null?"Document":docType%></p>
+					<p style="<%=(type==null?"":"color:white;")%>"><%=type==null?"Document":type%></p>
 				</div>
 				<div class="noScroll">
 					<ul>
@@ -225,12 +238,17 @@
 			</div>
 			<%if (colN != null) {%>
 			<form id="addDoc" action="/bibli_j2e/vueAddDoc" method="get">
-				<div class="input">
-					<%for (int i = 0, c = colN.size(); i < c; i++) {%>
-						<label for="<%=colN.get(i)%>"><%=Character.toUpperCase(colN.get(i).charAt(0)) + colN.get(i).substring(1, colN.get(i).length())%> :</label>
-						<input type="text" name="<%=colN.get(i)%>">
-					<%}%>
-				</div>
+				<input type="hidden" name="type" value="<%=type%>">
+				<input type="hidden" name="askVerif" value="1">
+				<%for (int i = 0, c = colN.size(); i < c; i++) {%>
+					<div class="input">
+						<label for="<%=colN.get(i)%>"><%=Character.toUpperCase(colN.get(i).charAt(0)) + colN.get(i).substring(1, colN.get(i).length())%></label>
+						<div id="centerinp"><input type="text" name="<%=colN.get(i)%>"
+							placeholder="- <%=Character.toUpperCase(colN.get(i).charAt(0)) + colN.get(i).substring(1, colN.get(i).length())%> -"
+							value="<%=request.getParameter(colN.get(i))==null?"":request.getParameter(colN.get(i))%>"
+							style="<%=(err != null && err.contains(i))?"border-color:red;":""%>"></div>
+					</div>
+				<%}%>
 				<div id="submit">
 					<button id="submitButton" type="submit"><p>Valider</p></button>
 				</div>

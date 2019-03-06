@@ -47,8 +47,14 @@ public class VueAddDoc extends HttpServlet {
 			colN = getColumnName(type);
 		}
 
-		System.out.println(colN);
+		List<Integer> err = null;
+		if (req.getParameter("askVerif") != null) {
+			err = verif(req, colN);
+			System.out.println(err);
+		}
 
+		if (!(err == null) && !err.isEmpty())
+			req.setAttribute("err", err);
 		req.setAttribute("types", types);
 		req.setAttribute("colN", colN);
 		req.setAttribute("colT", colT);
@@ -84,6 +90,33 @@ public class VueAddDoc extends HttpServlet {
 		return colN;
 	}
 
+	private List<String> getColumnType(String type) {
+		String req = "SELECT d.*, t.* FROM Document d, TABLE t";
+		req = req.replaceFirst("TABLE", type);
+
+		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
+
+		List<String> colT = new ArrayList<>();
+
+		try {
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery(req);
+
+			if (r.next()) {
+				ResultSetMetaData rs = r.getMetaData();
+				for (int i = 1, nb = rs.getColumnCount(); i <= nb; i++) {
+					String cn = rs.getColumnName(i).toLowerCase();
+					if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte")) {
+						colT.add(rs.getColumnTypeName(i));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return colT;
+	}
+
 	private List<String> getTypes() {
 		String req = "SELECT type FROM DocType";
 
@@ -101,6 +134,23 @@ public class VueAddDoc extends HttpServlet {
 			e.printStackTrace();
 		}
 		return types;
+	}
+
+	private List<Integer> verif(HttpServletRequest req, List<String> colN) {
+		String type = req.getParameter("type");
+
+		List<String> colT = getColumnType(type);
+
+		List<Integer> err = new ArrayList<>();
+
+		for (int i = 0, c = colN.size(); i < c; i++) {
+			String n = colN.get(i);
+			String v = req.getParameter(n);
+
+			if (v == null || v.equals("") || (colT.get(i).equals("INT") && !v.matches("[0-9]+")))
+				err.add(i);
+		}
+		return err;
 	}
 
 	public static Connection connectMySQL(String url, String log, String mdp) {
