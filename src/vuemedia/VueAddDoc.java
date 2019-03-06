@@ -50,7 +50,6 @@ public class VueAddDoc extends HttpServlet {
 		List<Integer> err = null;
 		if (req.getParameter("askVerif") != null) {
 			err = verif(req, colN);
-			System.out.println(err);
 		}
 
 		if (!(err == null) && !err.isEmpty())
@@ -64,8 +63,9 @@ public class VueAddDoc extends HttpServlet {
 	}
 
 	private List<String> getColumnName(String type) {
-		String req = "SELECT d.*, t.* FROM Document d, TABLE t";
-		req = req.replaceFirst("TABLE", type);
+		String req1 = "DESCRIBE Document";
+		String req2 = "DESCRIBE TABLE";
+		req2 = req2.replaceFirst("TABLE", type);
 
 		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
@@ -73,16 +73,19 @@ public class VueAddDoc extends HttpServlet {
 
 		try {
 			Statement s = c.createStatement();
-			ResultSet r = s.executeQuery(req);
+			ResultSet r = s.executeQuery(req1);
+			String cn = null;
+			while (r.next()) {
+				cn = r.getString(1);
+				if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte"))
+					colN.add(r.getString(1));
+			}
 
-			if (r.next()) {
-				ResultSetMetaData rs = r.getMetaData();
-				for (int i = 1, nb = rs.getColumnCount(); i <= nb; i++) {
-					String cn = rs.getColumnName(i).toLowerCase();
-					if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte")) {
-						colN.add(rs.getColumnName(i));
-					}
-				}
+			r = s.executeQuery(req2);
+			while (r.next()) {
+				cn = r.getString(1);
+				if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte"))
+					colN.add(r.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,8 +94,9 @@ public class VueAddDoc extends HttpServlet {
 	}
 
 	private List<String> getColumnType(String type) {
-		String req = "SELECT d.*, t.* FROM Document d, TABLE t";
-		req = req.replaceFirst("TABLE", type);
+		String req1 = "DESCRIBE Document";
+		String req2 = "DESCRIBE TABLE";
+		req2 = req2.replaceFirst("TABLE", type);
 
 		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
@@ -100,17 +104,22 @@ public class VueAddDoc extends HttpServlet {
 
 		try {
 			Statement s = c.createStatement();
-			ResultSet r = s.executeQuery(req);
+			ResultSet r = s.executeQuery(req1);
 
-			if (r.next()) {
-				ResultSetMetaData rs = r.getMetaData();
-				for (int i = 1, nb = rs.getColumnCount(); i <= nb; i++) {
-					String cn = rs.getColumnName(i).toLowerCase();
-					if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte")) {
-						colT.add(rs.getColumnTypeName(i));
-					}
-				}
+			String cn = null;
+			while (r.next()) {
+				cn = r.getString(1);
+				if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte"))
+					colT.add(r.getString(2));
 			}
+
+			r = s.executeQuery(req2);
+			while (r.next()) {
+				cn = r.getString(1);
+				if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte"))
+					colT.add(r.getString(2));
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -147,7 +156,7 @@ public class VueAddDoc extends HttpServlet {
 			String n = colN.get(i);
 			String v = req.getParameter(n);
 
-			if (v == null || v.equals("") || (colT.get(i).equals("INT") && !v.matches("[0-9]+")))
+			if (v == null || v.equals("") || (colT.get(i).toLowerCase().matches(".*int.*") && !v.matches("[0-9]+")))
 				err.add(i);
 		}
 		return err;
