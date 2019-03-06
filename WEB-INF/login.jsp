@@ -24,7 +24,7 @@
 
 		<div class="input">
 			<label for="log">Pseudo :</label>
-			<input type="text" placeholder="Pseudo" id="log" value="test" name="log">
+			<input type="text" placeholder="Pseudo" id="log" value="testb" name="log">
 		</div>
 
 		<div class="input">

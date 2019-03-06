@@ -44,8 +44,10 @@ public class VueAddDoc extends HttpServlet {
 		List<String> types = getTypes();
 
 		if (type != null) {
-			setColumnInfos(type, colN, colT);
+			colN = getColumnName(type);
 		}
+
+		System.out.println(colN);
 
 		req.setAttribute("types", types);
 		req.setAttribute("colN", colN);
@@ -55,8 +57,35 @@ public class VueAddDoc extends HttpServlet {
 		this.getServletContext().getRequestDispatcher("/WEB-INF/vueAddDoc.jsp").forward(req, resp);
 	}
 
+	private List<String> getColumnName(String type) {
+		String req = "SELECT d.*, t.* FROM Document d, TABLE t";
+		req = req.replaceFirst("TABLE", type);
+
+		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
+
+		List<String> colN = new ArrayList<>();
+
+		try {
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery(req);
+
+			if (r.next()) {
+				ResultSetMetaData rs = r.getMetaData();
+				for (int i = 1, nb = rs.getColumnCount(); i <= nb; i++) {
+					String cn = rs.getColumnName(i).toLowerCase();
+					if (!cn.toLowerCase().contains("id") && !cn.toLowerCase().contains("emprunte")) {
+						colN.add(rs.getColumnName(i));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return colN;
+	}
+
 	private List<String> getTypes() {
-		String req = "SELCT type FROM DocType";
+		String req = "SELECT type FROM DocType";
 
 		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
@@ -66,38 +95,12 @@ public class VueAddDoc extends HttpServlet {
 			Statement s = c.createStatement();
 			ResultSet r = s.executeQuery(req);
 
-			if (r.next())
+			while (r.next())
 				types.add(r.getString(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return types;
-	}
-
-	private void setColumnInfos(String type, List<String> colN, List<String> colT) {
-		String req = "SELCT * FROM TABLE";
-		req.replaceFirst("TABLE", type);
-
-		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
-
-		colN = new ArrayList<>();
-		colT = new ArrayList<>();
-
-		try {
-			Statement s = c.createStatement();
-
-			ResultSet r = s.executeQuery(req);
-
-			if (r.next()) {
-				ResultSetMetaData rs = r.getMetaData();
-				for (int i = 0, nb = rs.getColumnCount(); i < nb; i++) {
-					colN.add(rs.getColumnName(i));
-					colT.add(rs.getColumnName(i));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static Connection connectMySQL(String url, String log, String mdp) {

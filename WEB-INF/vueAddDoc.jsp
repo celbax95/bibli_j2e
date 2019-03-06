@@ -11,6 +11,9 @@
 	String docType = (String)request.getAttribute("docType");
 	List<String> types = (List<String>)request.getAttribute("types");
 
+	List<String> colN = (List<String>)request.getAttribute("colN");
+	List<String> colT = (List<String>)request.getAttribute("colT");
+
 	Boolean bibli = (Boolean)request.getAttribute("bibli");
 %>
 
@@ -82,7 +85,7 @@
 		position: absolute;
 		left: -1px;
 		width: calc(100% + 2px);
-		max-height: 300px;
+		height: auto;
 		float: left;
 		visibility: hidden;
 		opacity: 0;
@@ -100,7 +103,7 @@
 	#content div.list div.noScroll ul {
 		width: calc( 100% + 1.4vw);
 		height: 100%;
-		overflow-y: auto; 
+		overflow-y: scroll; 
 	}
 
 	#content div.list div.noScroll ul a li {
@@ -123,14 +126,72 @@
 	#content div.list div.noScroll ul a {
 		text-decoration: none;
 	}
+
+	#content #addDoc {
+		width: 500px;
+		margin: auto;
+		margin-top: 40px;
+	}
+
+	#content .input label {
+		width: 150px;
+		display: inline-block;
+		color: white;
+		font-size: 18px;
+		height: 30px;
+	}
+	#content .input input {
+		background-color: rgb(200,200,200);
+		width: 345px;
+		font-size: 17px;
+		padding: 2px;
+		padding-left: 8px;
+		padding-right: 8px;
+		border: 1px solid black;
+		border-radius: 5px;
+	}
+
+	#content #submit {
+		width: 100%;
+		text-align: center;
+	}
+
+	#content #addDoc button {
+		background-color: white;
+		border: none;
+		width: 120px;
+		height: 40px;
+		margin-top: 40px;
+		text-align: center;
+		box-shadow: 0 5px rgb(200,200,200);
+		border-radius: 20px;
+		transition: 0.8s;
+	}
+
+	#content #addDoc button:hover {
+		background-color: rgb(240,240,240);
+		box-shadow: 0 5px rgb(180,180,180);
+	}
+
+	#content #addDoc button:active {
+		transform: translateY(2px);
+		box-shadow: 0 3px rgb(150,150,150);
+		transition: 0.08s;
+	}
+
+	#content #addDoc button p {
+		display: block;
+		text-align: center;
+		font-size: 17px;
+	}
 </style>
 
 <script type="text/javascript">
-	function onLoadFunctions() {
-		var e = document.querySelector("#content div.list div.noScroll");
-		window.alert(e.getAttribute("width"));
-	}
-	window.onload = onLoadFunctions;
+	window.onload = function() {
+		var l = document.querySelector("#content div.list div.noScroll");
+		if (l.offsetHeight > 200)
+			l.style.height = "200px";
+	};
 </script>
 
 <body>
@@ -155,23 +216,26 @@
 					<ul>
 						<%for (int i = 0, c = types.size(); i < c; i++) {
 						String t = types.get(i);%>
-							<a href="<%=t%>"><li>
-								<%=Character.toUpperCase(t.charAt(0)) + t.substring(1, t.length()).toLowerCase()%>
+							<a href="?type=<%=t%>"><li>
+								<%=Character.toUpperCase(t.charAt(0)) + t.substring(1, t.length())%>
 							</li></a>
 						<%}%>
-
-
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
-						<a href=""><li>Choix</li></a>
 					</ul>
 				</div>
 			</div>
+			<%if (colN != null) {%>
+			<form id="addDoc" action="/bibli_j2e/vueAddDoc" method="get">
+				<div class="input">
+					<%for (int i = 0, c = colN.size(); i < c; i++) {%>
+						<label for="<%=colN.get(i)%>"><%=Character.toUpperCase(colN.get(i).charAt(0)) + colN.get(i).substring(1, colN.get(i).length())%> :</label>
+						<input type="text" name="<%=colN.get(i)%>">
+					<%}%>
+				</div>
+				<div id="submit">
+					<button id="submitButton" type="submit"><p>Valider</p></button>
+				</div>
+			</form>
+			<%}%>
 		</div>
 	</div>
 </body>
