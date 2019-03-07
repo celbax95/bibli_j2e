@@ -131,6 +131,17 @@
 	margin-top: 18px;
 	margin-bottom: 6px;
 }
+
+#content .action a {
+	display: block;
+	width: 120px;
+	height: auto;
+	overflow: hidden;
+	padding-bottom: 9px;
+	margin: auto;
+	text-decoration: none;
+}
+
 #content .btn {
 	width: 120px;
 	height: 40px;
@@ -161,15 +172,6 @@
 	font-weight: bold;
 	text-decoration: none;
 	color: black;
-}
-#content a {
-	display: block;
-	width: auto;
-	height: auto;
-	overflow: hidden;
-	padding-bottom: 9px;
-	margin: auto;
-	text-decoration: none;
 }
 #content .btn.blocked {
 	background-color: rgba(0,0,0,0.4);
