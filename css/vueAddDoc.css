@@ -72,7 +72,7 @@
 }
 
 #content div.list div.noScroll ul {
-	width: calc( 100% + 1.4vw);
+	width: calc( 100% + 0.7vw);
 	height: 100%;
 	overflow-y: scroll; 
 }
