@@ -16,6 +16,8 @@
 
 	List<Integer> err = (List<Integer>)request.getAttribute("err");
 
+	String ajout = (String)request.getParameter("ajout");
+
 	Boolean bibli = (Boolean)request.getAttribute("bibli");
 %>
 
@@ -129,6 +131,19 @@
 		text-decoration: none;
 	}
 
+	#content #ajoute {
+		width: 100%;
+		margin-top: 30px;
+	}
+
+	#content #ajoute p {
+		text-align: center;
+		color: lime;
+		font-size: 20px;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+
 	#content #addDoc {
 		width: 500px;
 		margin: auto;
@@ -236,6 +251,13 @@
 					</ul>
 				</div>
 			</div>
+
+			<%if (ajout != null && ajout.equals("1")) {%>
+			<div id="ajoute">
+				<p>Document ajouté</p>
+			</div>
+			<%}%>
+
 			<%if (colN != null) {%>
 			<form id="addDoc" action="/bibli_j2e/vueAddDoc" method="get">
 				<input type="hidden" name="type" value="<%=type%>">

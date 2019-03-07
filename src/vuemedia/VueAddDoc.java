@@ -48,18 +48,40 @@ public class VueAddDoc extends HttpServlet {
 		}
 
 		List<Integer> err = null;
-		if (req.getParameter("askVerif") != null) {
-			err = verif(req, colN);
+		if (type != null && req.getParameter("askVerif") != null) {
+			err = verif(req, type, colN);
 		}
 
-		if (!(err == null) && !err.isEmpty())
+		if (err != null && !err.isEmpty())
 			req.setAttribute("err", err);
+		else if (err != null && err.isEmpty() && type != null) {
+			// Ajout du document
+			int typeInt = getType(type);
+			Mediatheque.getInstance().nouveauDocument(typeInt, getArgs(type, req));
+			resp.sendRedirect("./vueAddDoc?type=" + type + "&ajout=1");
+			return;
+		}
 		req.setAttribute("types", types);
 		req.setAttribute("colN", colN);
 		req.setAttribute("colT", colT);
 		req.setAttribute("bibli", u.isBibliothecaire());
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/vueAddDoc.jsp").forward(req, resp);
+	}
+
+	private Object[] getArgs(String type, HttpServletRequest req) {
+		List<Object> l = new ArrayList<>();
+
+		List<String> colN = getColumnName(type);
+
+		for (String s : colN) {
+			String p = req.getParameter(s);
+			if (p == null || p.equals(""))
+				return null;
+			l.add(p);
+		}
+
+		return l.toArray();
 	}
 
 	private List<String> getColumnName(String type) {
@@ -126,8 +148,21 @@ public class VueAddDoc extends HttpServlet {
 		return colT;
 	}
 
+	private int getType(String type) {
+		switch (type.toLowerCase()) {
+		case "livre":
+			return 0;
+		case "cd":
+			return 1;
+		case "dvd":
+			return 2;
+		default:
+			return -1;
+		}
+	}
+
 	private List<String> getTypes() {
-		String req = "SELECT type FROM DocType";
+		String req = "SELECT type FROM DocTypes";
 
 		Connection c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 
@@ -145,8 +180,7 @@ public class VueAddDoc extends HttpServlet {
 		return types;
 	}
 
-	private List<Integer> verif(HttpServletRequest req, List<String> colN) {
-		String type = req.getParameter("type");
+	private List<Integer> verif(HttpServletRequest req, String type, List<String> colN) {
 
 		List<String> colT = getColumnType(type);
 

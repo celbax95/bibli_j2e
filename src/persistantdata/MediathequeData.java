@@ -129,14 +129,15 @@ public class MediathequeData implements PersistentMediatheque {
 
 	@Override
 	public void nouveauDocument(int type, Object... o) {
-		String reqDoc = "INSERT INTO Document VALUES (?, ?, ?, ?, ?)";
+		String reqDoc = "INSERT INTO Document(nom, auteur, prix, emprunte) VALUES (?, ?, ?, ?)";
 		String reqSpeInf = "DESCRIBE TABLE";
 		String reqSpe = "INSERT INTO TABLE VALUES ";
+		String reqType = "INSERT INTO DocType VALUES (?, ?)";
 
 		ResultSet res = null;
 		String table = DocFactory.getTableName(type);
-		reqSpeInf.replaceFirst("TABLE", table);
-		reqSpe.replaceFirst("TABLE", table);
+		reqSpeInf = reqSpeInf.replaceFirst("TABLE", table);
+		reqSpe = reqSpe.replaceFirst("TABLE", table);
 
 		int idDoc = 0;
 
@@ -149,7 +150,6 @@ public class MediathequeData implements PersistentMediatheque {
 			if (!res.next())
 				return;
 			else {
-				types.add(res.getString(2));
 				reqSpe += "(?";
 			}
 			while (res.next()) {
@@ -162,11 +162,10 @@ public class MediathequeData implements PersistentMediatheque {
 			int i = 1;
 			int j = 0;
 			s = c.prepareStatement(reqDoc, Statement.RETURN_GENERATED_KEYS);
-			s.setInt(i++, (int) o[j++]);
 			s.setString(i++, (String) o[j++]);
 			s.setString(i++, (String) o[j++]);
-			s.setInt(i++, (int) o[j++]);
-			s.setInt(i++, (int) o[j++]);
+			s.setInt(i++, Integer.valueOf((String) o[j++]));
+			s.setInt(i++, 0);
 			s.executeUpdate();
 
 			// recuperation de l'id auto-genere
@@ -175,11 +174,11 @@ public class MediathequeData implements PersistentMediatheque {
 			if (!res.next())
 				return;
 
-			idDoc = res.getInt(0);
+			idDoc = res.getInt(1);
 
 			// insertion dans le type de document
 			i = 1;
-			s = c.prepareStatement(reqSpe, Statement.RETURN_GENERATED_KEYS);
+			s = c.prepareStatement(reqSpe);
 			s.setInt(i++, idDoc);
 			for (String st : types) {
 				if (st.matches(".*int.*"))
@@ -187,6 +186,11 @@ public class MediathequeData implements PersistentMediatheque {
 				else if (st.matches(".*varchar.*"))
 					s.setString(i++, (String) o[j++]);
 			}
+			s.executeUpdate();
+
+			s = c.prepareStatement(reqType);
+			s.setInt(1, idDoc);
+			s.setString(2, DocFactory.getTableName(type));
 			s.executeUpdate();
 
 		} catch (SQLException e) {
@@ -210,8 +214,9 @@ public class MediathequeData implements PersistentMediatheque {
 			while (res.next())
 				ids.add(res.getInt(1));
 
-			for (Integer idDoc : ids)
+			for (Integer idDoc : ids) {
 				docs.add(getDocument(idDoc));
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
