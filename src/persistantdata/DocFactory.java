@@ -24,4 +24,17 @@ public class DocFactory {
 			return null;
 		}
 	}
+
+	public static String getTableName(int type) {
+		switch (type) {
+		case 0:
+			return "Livre";
+		case 1:
+			return "CD";
+		case 2:
+			return "DVD";
+		default:
+			return null;
+		}
+	}
 }
