@@ -28,8 +28,6 @@ public class MediathequeData implements PersistentMediatheque {
 
 	private static Connection c;
 
-	private static String[] tName = new String[] { "CD", "DVD", "Livre" };
-
 	static {
 		c = connectMySQL(Loader.URL, Loader.LOG, Loader.MDP);
 		if (c != null) {
@@ -132,22 +130,46 @@ public class MediathequeData implements PersistentMediatheque {
 	@Override
 	public void nouveauDocument(int type, Object... o) {
 		String reqDoc = "INSERT INTO Document VALUES (?, ?, ?, ?, ?)";
-		String reqSpe = "INSERT INTO ? VALUES (?, ?)";
+		String reqSpeInf = "DESCRIBE TABLE";
+		String reqSpe = "INSERT INTO TABLE VALUES ";
 
 		ResultSet res = null;
+		String table = DocFactory.getTableName(type);
+		reqSpeInf.replaceFirst("TABLE", table);
+		reqSpe.replaceFirst("TABLE", table);
 
 		int idDoc = 0;
 
 		try {
-			int i = 0;
-			PreparedStatement s = c.prepareStatement(reqDoc, Statement.RETURN_GENERATED_KEYS);
-			s.setInt(i + 1, (int) o[i++]);
-			s.setString(i + 1, (String) o[i++]);
-			s.setString(i + 1, (String) o[i++]);
-			s.setInt(i + 1, (int) o[i++]);
-			s.setInt(i + 1, (int) o[i++]);
+			// on recupere les champs a remplir pour le type de document
+			List<String> types = new ArrayList<>();
+
+			PreparedStatement s = c.prepareStatement(reqSpeInf);
+			res = s.executeQuery();
+			if (!res.next())
+				return;
+			else {
+				types.add(res.getString(2));
+				reqSpe += "(?";
+			}
+			while (res.next()) {
+				types.add(res.getString(2));
+				reqSpe += ", ?";
+			}
+			reqSpe += ")";
+
+			// insertion dans document
+			int i = 1;
+			int j = 0;
+			s = c.prepareStatement(reqDoc, Statement.RETURN_GENERATED_KEYS);
+			s.setInt(i++, (int) o[j++]);
+			s.setString(i++, (String) o[j++]);
+			s.setString(i++, (String) o[j++]);
+			s.setInt(i++, (int) o[j++]);
+			s.setInt(i++, (int) o[j++]);
 			s.executeUpdate();
 
+			// recuperation de l'id auto-genere
 			res = s.getGeneratedKeys();
 
 			if (!res.next())
@@ -155,10 +177,16 @@ public class MediathequeData implements PersistentMediatheque {
 
 			idDoc = res.getInt(0);
 
+			// insertion dans le type de document
+			i = 1;
 			s = c.prepareStatement(reqSpe, Statement.RETURN_GENERATED_KEYS);
-			s.setString(0, tName[type]);
-			s.setInt(1, idDoc);
-			s.setString(2, (String) o[i++]);
+			s.setInt(i++, idDoc);
+			for (String st : types) {
+				if (st.matches(".*int.*"))
+					s.setInt(i++, (int) o[j++]);
+				else if (st.matches(".*varchar.*"))
+					s.setString(i++, (String) o[j++]);
+			}
 			s.executeUpdate();
 
 		} catch (SQLException e) {
